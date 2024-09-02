@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Parcel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> 
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Parcel Management</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_parcel' %}">Add Parcel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'track_parcel' %}">Track Parcel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'list_parcels' %}">List Parcels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'generate_report' %}">Generate Report</a>
+                </li>
+            </ul>
+            
+            <!-- User Profile Dropdown with Icon -->
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- User icon instead of image -->
+                        <i class="fas fa-user-circle fa-2x"></i> <!-- Font Awesome User Icon -->
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>Track Your Parcel</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="parcel_id" class="form-label">Parcel ID</label>
+                <input type="text" class="form-control" id="parcel_id" name="parcel_id" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Track Parcel</button>
+        </form>
+
+        {% if parcel %}
+            <h2>Parcel Details</h2>
+            <p>Parcel ID: {{ parcel.parcel_id }}</p>
+            <p>Sender: {{ parcel.sender_name }}</p>
+            <p>Receiver: {{ parcel.receiver_name }}</p>
+            <p>Status: {{ parcel.status }}</p>
+            <h3>Status Updates</h3>
+            <ul>
+                {% for update in status_updates %}
+                    <li>{{ update.status }} at {{ update.location }} on {{ update.update_time }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
