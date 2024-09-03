@@ -126,6 +126,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTHENTICATION_BACKENDS = [
+    'frontend.backends.EmailBackend',  # Add your custom backend
+    'django.contrib.auth.backends.ModelBackend',  # Keep the default one for username
+]
+
+# Optionally, if you want the email field to be unique (if not already):
+AUTH_USER_MODEL = 'auth.User'  # This ensures email is unique in User model
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

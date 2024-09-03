@@ -17,3 +17,10 @@ class StatusUpdateForm(forms.ModelForm):
     class Meta:
         model = StatusUpdate
         fields = ['parcel', 'status', 'location']
+
+
+from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+
+class EmailLoginForm(AuthenticationForm):
+    username = forms.EmailField(label='Email', max_length=254)

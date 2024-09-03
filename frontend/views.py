@@ -8,6 +8,11 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
 @login_required
 def home(request):
     parcels = Parcel.objects.all()
@@ -100,3 +105,11 @@ def profile_view(request):
     return render(request, 'frontend/profile.html', {'profile': profile})
 
 
+
+
+
+from django.contrib.auth.views import LoginView
+from .forms import EmailLoginForm
+
+class CustomLoginView(LoginView):
+    form_class = EmailLoginForm
